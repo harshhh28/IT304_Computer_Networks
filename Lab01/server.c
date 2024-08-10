@@ -18,12 +18,12 @@ if ((server_fd = socket(AF_INET, SOCK_STREAM, 0)) == -1) {
 perror("socket failed"); 
 exit(EXIT_FAILURE); 
 } 
-// Forcefully attaching socket to the port 8080 - For address reuse 
-if (setsockopt(server_fd, SOL_SOCKET, SO_REUSEADDR | SO_REUSEPORT, &opt, sizeof(opt))) { 
+// Forcefully attaching socket to the port 8080 - For address reuse
+if (setsockopt(server_fd, SOL_SOCKET, SO_REUSEADDR, &opt, sizeof(opt))) { 
 perror("setsockopt"); 
 exit(EXIT_FAILURE); 
 } 
-address.sin_family = AF_INET; // match the socket() call 
+address.sin_family = AF_INET; // match the socket() call
 address.sin_addr.s_addr = INADDR_ANY; // bind to any local address address.sin_port = htons(PORT); // specify port to listen on 
 // Forcefully attaching socket to the port 8080 
 if (bind(server_fd, (struct sockaddr *)&address, sizeof(address)) < 0) { perror("bind failed"); 
