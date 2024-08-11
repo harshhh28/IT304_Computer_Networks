@@ -42,7 +42,6 @@ int main() {
         fgets(message, MAXLINE, stdin);
         message[strcspn(message, "\n")] = 0;
 
-        // Exit if user types "q"
         if (strcmp(message, "q") == 0) {
             sendto(sockfd, message, strlen(message), 0, (struct sockaddr*)&servaddr, sizeof(servaddr));
             printf("Client has exited.\n");
