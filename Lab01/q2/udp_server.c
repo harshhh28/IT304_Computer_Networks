@@ -1,4 +1,4 @@
-// udp_server.c
+// Server side C program
 
 #include <stdio.h>
 #include <stdlib.h>
@@ -12,6 +12,7 @@
 uint32_t compute_checksum(const char *data, size_t length);
 
 int main() {
+    
     int sockfd;
     struct sockaddr_in servaddr, cliaddr;
     char buffer[MAXLINE];
@@ -57,7 +58,8 @@ int main() {
             memcpy(response, &checksum, sizeof(checksum));
             memcpy(response + sizeof(checksum), error_message, strlen(error_message));
             sendto(sockfd, response, sizeof(checksum) + strlen(error_message), 0, (struct sockaddr*)&cliaddr, len);
-        } else {
+        }
+        else {
             printf("Received message: %s\n", received_message);
             char *ack_message = "Message received correctly!";
             checksum = compute_checksum(ack_message, strlen(ack_message));

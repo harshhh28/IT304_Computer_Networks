@@ -1,4 +1,4 @@
-// Server side C/C++ program
+// Server side C program (TCP)
 
 #include <unistd.h>
 #include <stdio.h>
@@ -19,6 +19,7 @@ QAPair qa_pairs[MAX_QA_PAIRS];
 int qa_count = 0;
 
 void load_qas_from_file(const char *filename) {
+    
     FILE *file = fopen(filename, "r");
     if (file == NULL) {
         perror("Failed to open Q&A file");

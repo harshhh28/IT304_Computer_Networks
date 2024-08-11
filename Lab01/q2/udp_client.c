@@ -1,4 +1,4 @@
-// udp_client.c
+// Client side C program
 
 #include <stdio.h>
 #include <stdlib.h>
@@ -7,13 +7,13 @@
 #include <arpa/inet.h>
 #include <stdint.h>
 
-
 #define PORT 8080
 #define MAXLINE 1024
 
 uint32_t compute_checksum(const char *data, size_t length);
 
 int main() {
+
     int sockfd;
     struct sockaddr_in servaddr;
     char buffer[MAXLINE];
@@ -33,7 +33,7 @@ int main() {
 
     printf("Enter message to send: ");
     fgets(message, MAXLINE, stdin);
-    message[strcspn(message, "\n")] = 0;  // Remove newline character
+    message[strcspn(message, "\n")] = 0;
 
     // Compute checksum
     checksum = compute_checksum(message, strlen(message));
@@ -58,7 +58,8 @@ int main() {
     // Verify checksum
     if (compute_checksum(response_message, strlen(response_message)) != response_checksum) {
         printf("Received corrupted message\n");
-    } else {
+    }
+    else {
         printf("Server response: %s\n", response_message);
     }
 

@@ -5,4 +5,4 @@
 
 uint32_t compute_checksum(const char *data, size_t length);
 
-#endif // CHECKSUM_H
+#endif
