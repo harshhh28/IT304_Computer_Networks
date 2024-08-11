@@ -1,5 +1,5 @@
-What is the capital of France?;Paris
-Who is the inventor of C++?;Bjarne Stroustrup
-What is the speed of light?;299,792,458 meters per second
-What is the largest planet in our solar system?;Jupiter
-Who wrote 'To Kill a Mockingbird'?;Harper Lee
+Can you tell me a joke about UDP?;There's only 50% chance that you would get it!
+Who is your favorite mythical creature?;An Honest Politician!
+Why should we not steal?;Because that's the Government's job!
+Why can't Trump go to the White House anymore?;Cause it's FOR BIDEN!
+Is Halloween the scariest night?;No, it's the Election night!

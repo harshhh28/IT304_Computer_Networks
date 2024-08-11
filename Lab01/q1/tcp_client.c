@@ -56,7 +56,7 @@ int main(int argc, char const *argv[]) {
         return -1;
     }
     
-    // Connect
+    // Check connection
     if(connect(sock, (struct sockaddr*)&serv_addr, sizeof(serv_addr)) < 0) {
         printf("\nConnection Failed\n");
         return -1;
