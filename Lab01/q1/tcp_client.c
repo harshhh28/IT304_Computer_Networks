@@ -76,6 +76,7 @@ int main(int argc, char const *argv[]) {
         msg[strcspn(msg, "\n")] = 0;
 
         if(strcmp(msg, "q") == 0) {
+            send(sock, msg, strlen(msg), 0);
             close(sock);
             break;
         }

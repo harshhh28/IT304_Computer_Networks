@@ -11,7 +11,7 @@
 
 uint32_t compute_checksum(const char *data, size_t length) {
     uint32_t checksum = 0;
-    for (size_t i = 0; i < length; ++i) {
+    for(size_t i = 0; i < length; ++i) {
         checksum += (uint8_t)data[i];
     }
     return checksum;
@@ -25,7 +25,7 @@ int main() {
     uint32_t checksum;
 
     // Create socket
-    if ((sockfd = socket(AF_INET, SOCK_DGRAM, 0)) < 0) {
+    if((sockfd = socket(AF_INET, SOCK_DGRAM, 0)) < 0) {
         perror("Socket creation failed");
         exit(EXIT_FAILURE);
     }
@@ -36,34 +36,27 @@ int main() {
     servaddr.sin_port = htons(PORT);
 
     // Bind
-    if (bind(sockfd, (struct sockaddr*)&servaddr, sizeof(servaddr)) < 0) {
+    if(bind(sockfd, (struct sockaddr*)&servaddr, sizeof(servaddr)) < 0) {
         perror("Bind failed");
         close(sockfd);
         exit(EXIT_FAILURE);
     }
 
-    while (1) {
+    while(1) {
         socklen_t len = sizeof(cliaddr);
+        int n = recvfrom(sockfd, buffer, MAXLINE, 0, (struct sockaddr*)&cliaddr, &len);
 
-        if (recvfrom(sockfd, buffer, MAXLINE, 0, (struct sockaddr*)&cliaddr, &len) < 0) {
+        if(n < 0) {
             perror("Receive failed");
             continue;
         }
 
-
-        char *received_message = buffer;
-        if (strcmp(received_message, "q") == 0) {
-            printf("Client has disconnected.\n");
-            break;
-        }
-
         // Extract checksum from received packet
         memcpy(&checksum, buffer, sizeof(checksum));
-        received_message = buffer + sizeof(checksum);
-
+        char *received_message = buffer + sizeof(checksum);
 
         // Verify checksum
-        if (compute_checksum(received_message, strlen(received_message)) != checksum) {
+        if(compute_checksum(received_message, strlen(received_message)) != checksum) {
             printf("Received corrupted message\n");
             char *error_message = "Error! Corrupted packet!";
             checksum = compute_checksum(error_message, strlen(error_message));

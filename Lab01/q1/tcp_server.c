@@ -95,6 +95,11 @@ int main(int argc, char const *argv[]) {
             break;
         }
 
+        if(!strcmp(buffer, "q")) {
+            printf("CLient has disconnected\n");
+            break;
+        }
+
         printf("Client selected option: %s\n", buffer);
         int option = atoi(buffer);
 

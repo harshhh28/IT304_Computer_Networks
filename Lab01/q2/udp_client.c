@@ -27,7 +27,7 @@ int main() {
     uint32_t checksum;
 
     // Create socket
-    if ((sockfd = socket(AF_INET, SOCK_DGRAM, 0)) < 0) {
+    if((sockfd = socket(AF_INET, SOCK_DGRAM, 0)) < 0) {
         perror("Socket creation failed");
         exit(EXIT_FAILURE);
     }
@@ -42,7 +42,7 @@ int main() {
         fgets(message, MAXLINE, stdin);
         message[strcspn(message, "\n")] = 0;
 
-        if (strcmp(message, "q") == 0) {
+        if(!strcmp(message, "q")) {
             sendto(sockfd, message, strlen(message), 0, (struct sockaddr*)&servaddr, sizeof(servaddr));
             printf("Client has exited.\n");
             break;
@@ -68,7 +68,7 @@ int main() {
         char *response_message = buffer + sizeof(response_checksum);
 
         // Verify checksum
-        if (compute_checksum(response_message, strlen(response_message)) != response_checksum) {
+        if(compute_checksum(response_message, strlen(response_message)) != response_checksum) {
             printf("Received corrupted message\n");
         }
         else {
