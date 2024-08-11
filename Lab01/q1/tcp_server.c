@@ -54,7 +54,7 @@ int main(int argc, char const *argv[]) {
     // Load Q&A pairs from the file
     load_qas_from_file("qa.txt");
 
-    // Creating socket file descriptor
+    // Creating TCP socket file descriptor
     if((server_fd = socket(AF_INET, SOCK_STREAM, 0)) == 0) {
         perror("Socket failed");
         exit(EXIT_FAILURE);
@@ -70,19 +70,19 @@ int main(int argc, char const *argv[]) {
     address.sin_addr.s_addr = INADDR_ANY; // bind to any local address
     address.sin_port = htons(PORT); // Specify port to listen on forcefully attaching socket to the port 8080
     
-    // Bind
+    // Binds to speicifed address and port
     if(bind(server_fd, (struct sockaddr *)&address, sizeof(address)) < 0) {
         perror("bind failed");
         exit(EXIT_FAILURE);
     }
     
-    // Listen
+    // Listens for incoming connections
     if(listen(server_fd, 3) < 0) {
         perror("listen");
         exit(EXIT_FAILURE);
     }
     
-    // Accept
+    // Accepts the incoming connections
     if((new_socket = accept(server_fd, (struct sockaddr *)&address, (socklen_t*)&addrlen)) < 0) {
         perror("accept");
         exit(EXIT_FAILURE);
@@ -95,7 +95,7 @@ int main(int argc, char const *argv[]) {
             break;
         }
 
-        if(!strcmp(buffer, "q")) {
+        if(strcmp(buffer, "q") == 0) {
             printf("CLient has disconnected\n");
             break;
         }
@@ -107,7 +107,7 @@ int main(int argc, char const *argv[]) {
             send(new_socket, qa_pairs[option - 1].ans, strlen(qa_pairs[option - 1].ans), 0);
         }
         else {
-            char *invalid_response = "Server: Invalid option!\n";
+            char *invalid_response = "Invalid option!\n";
             send(new_socket, invalid_response, strlen(invalid_response), 0);
         }
 
