@@ -41,7 +41,7 @@ int main(int argc, char const *argv[]) {
 
     fclose(file);
 
-    // Socket connection
+    // Creating a TCP socket
     if((sock = socket(AF_INET, SOCK_STREAM, 0)) < 0) {
         printf("\nSocket creation error\n");
         return -1;

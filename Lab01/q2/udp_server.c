@@ -20,31 +20,30 @@ uint32_t compute_checksum(const char *data, size_t length) {
 int main() {
     
     int sockfd;
-    struct sockaddr_in servaddr, cliaddr;
+    struct sockaddr_in serv_addr, cli_addr;
     char buffer[MAXLINE];
     uint32_t checksum;
 
-    // Create socket
+    // Creating a UDP socket
     if((sockfd = socket(AF_INET, SOCK_DGRAM, 0)) < 0) {
         perror("Socket creation failed");
         exit(EXIT_FAILURE);
     }
 
-    memset(&servaddr, 0, sizeof(servaddr));
-    servaddr.sin_family = AF_INET;
-    servaddr.sin_addr.s_addr = INADDR_ANY;
-    servaddr.sin_port = htons(PORT);
+    memset(&erv, 0, sizeof(serv_addr));
+    serv_addr.sin_family = AF_INET;
+    serv_addr.sin_addr.s_addr = INADDR_ANY;
+    serv_addr.sin_port = htons(PORT);
 
-    // Bind
-    if(bind(sockfd, (struct sockaddr*)&servaddr, sizeof(servaddr)) < 0) {
+    // Binds the socket to given addr and port
+    if(bind(sockfd, (struct sockaddr*)&serv_addr, sizeof(serv_addr)) < 0) {
         perror("Bind failed");
-        close(sockfd);
         exit(EXIT_FAILURE);
     }
 
     while(1) {
-        socklen_t len = sizeof(cliaddr);
-        int n = recvfrom(sockfd, buffer, MAXLINE, 0, (struct sockaddr*)&cliaddr, &len);
+        socklen_t len = sizeof(cli_addr);
+        int n = recvfrom(sockfd, buffer, MAXLINE, 0, (struct sockaddr*)&cli_addr, &len);
 
         if(n < 0) {
             perror("Receive failed");
@@ -63,7 +62,7 @@ int main() {
             char response[MAXLINE + sizeof(checksum)];
             memcpy(response, &checksum, sizeof(checksum));
             memcpy(response + sizeof(checksum), error_message, strlen(error_message));
-            sendto(sockfd, response, sizeof(checksum) + strlen(error_message), 0, (struct sockaddr*)&cliaddr, len);
+            sendto(sockfd, response, sizeof(checksum) + strlen(error_message), 0, (struct sockaddr*)&cli_addr, len);
         }
         else {
             printf("Received message: %s\n", received_message);
@@ -72,7 +71,7 @@ int main() {
             char response[MAXLINE + sizeof(checksum)];
             memcpy(response, &checksum, sizeof(checksum));
             memcpy(response + sizeof(checksum), ack_message, strlen(ack_message));
-            sendto(sockfd, response, sizeof(checksum) + strlen(ack_message), 0, (struct sockaddr*)&cliaddr, len);
+            sendto(sockfd, response, sizeof(checksum) + strlen(ack_message), 0, (struct sockaddr*)&cli_addr, len);
         }
     }
 
