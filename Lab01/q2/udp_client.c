@@ -37,36 +37,37 @@ int main() {
     servaddr.sin_port = htons(PORT);
     servaddr.sin_addr.s_addr = inet_addr("127.0.0.1");
 
-    printf("Enter message to send: ");
-    fgets(message, MAXLINE, stdin);
-    message[strcspn(message, "\n")] = 0;
+    while(1) {
+        printf("Client: ");
+        fgets(message, MAXLINE, stdin);
+        message[strcspn(message, "\n")] = 0;
 
-    // Compute checksum
-    checksum = compute_checksum(message, strlen(message));
+        // Compute checksum
+        checksum = compute_checksum(message, strlen(message));
 
-    // Send message with checksum
-    char packet[MAXLINE + sizeof(checksum)];
-    memcpy(packet, &checksum, sizeof(checksum));
-    memcpy(packet + sizeof(checksum), message, strlen(message));
-    sendto(sockfd, packet, sizeof(checksum) + strlen(message), 0, (struct sockaddr*)&servaddr, sizeof(servaddr));
+        // Send message with checksum
+        char packet[MAXLINE + sizeof(checksum)];
+        memcpy(packet, &checksum, sizeof(checksum));
+        memcpy(packet + sizeof(checksum), message, strlen(message));
+        sendto(sockfd, packet, sizeof(checksum) + strlen(message), 0, (struct sockaddr*)&servaddr, sizeof(servaddr));
 
-    // Receive response
-    int n;
-    socklen_t len;
-    n = recvfrom(sockfd, buffer, MAXLINE, 0, (struct sockaddr*)&servaddr, &len);
-    buffer[n] = '\0';
+        // Receive response
+        socklen_t len;
+        int n = recvfrom(sockfd, buffer, MAXLINE, 0, (struct sockaddr*)&servaddr, &len);
+        buffer[n] = '\0';
 
-    // Extract checksum from response
-    uint32_t response_checksum;
-    memcpy(&response_checksum, buffer, sizeof(response_checksum));
-    char *response_message = buffer + sizeof(response_checksum);
+        // Extract checksum from response
+        uint32_t response_checksum;
+        memcpy(&response_checksum, buffer, sizeof(response_checksum));
+        char *response_message = buffer + sizeof(response_checksum);
 
-    // Verify checksum
-    if (compute_checksum(response_message, strlen(response_message)) != response_checksum) {
-        printf("Received corrupted message\n");
-    }
-    else {
-        printf("Server response: %s\n", response_message);
+        // Verify checksum
+        if (compute_checksum(response_message, strlen(response_message)) != response_checksum) {
+            printf("Received corrupted message\n");
+        }
+        else {
+            printf("Server: %s\n", response_message);
+        }
     }
 
     close(sockfd);
