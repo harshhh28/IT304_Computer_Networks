@@ -50,14 +50,17 @@ int main() {
             continue;
         }
 
-        // Extract checksum from received packet
-        memcpy(&checksum, buffer, sizeof(checksum));
-        char *received_message = buffer + sizeof(checksum);
 
+        char *received_message = buffer;
         if (strcmp(received_message, "q") == 0) {
             printf("Client has disconnected.\n");
             break;
         }
+
+        // Extract checksum from received packet
+        memcpy(&checksum, buffer, sizeof(checksum));
+        received_message = buffer + sizeof(checksum);
+
 
         // Verify checksum
         if (compute_checksum(received_message, strlen(received_message)) != checksum) {
