@@ -54,6 +54,12 @@ int main() {
         memcpy(&checksum, buffer, sizeof(checksum));
         char *received_message = buffer + sizeof(checksum);
 
+        // Exit if client sends "q"
+        if (strcmp(received_message, "q") == 0) {
+            printf("Client has disconnected.\n");
+            break;
+        }
+
         // Verify checksum
         if (compute_checksum(received_message, strlen(received_message)) != checksum) {
             printf("Received corrupted message\n");
