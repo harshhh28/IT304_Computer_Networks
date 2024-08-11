@@ -1,4 +1,4 @@
-// Server side C program
+// Server side C program (UDP)
 
 #include <stdio.h>
 #include <stdlib.h>
@@ -9,7 +9,13 @@
 #define PORT 8080
 #define MAXLINE 1024
 
-uint32_t compute_checksum(const char *data, size_t length);
+uint32_t compute_checksum(const char *data, size_t length) {
+    uint32_t checksum = 0;
+    for (size_t i = 0; i < length; ++i) {
+        checksum += (uint8_t)data[i];
+    }
+    return checksum;
+}
 
 int main() {
     
@@ -38,9 +44,8 @@ int main() {
 
     while (1) {
         socklen_t len = sizeof(cliaddr);
-        int n = recvfrom(sockfd, buffer, MAXLINE, 0, (struct sockaddr*)&cliaddr, &len);
 
-        if (n < 0) {
+        if (recvfrom(sockfd, buffer, MAXLINE, 0, (struct sockaddr*)&cliaddr, &len) < 0) {
             perror("Receive failed");
             continue;
         }
@@ -52,7 +57,7 @@ int main() {
         // Verify checksum
         if (compute_checksum(received_message, strlen(received_message)) != checksum) {
             printf("Received corrupted message\n");
-            char *error_message = "Error: Corrupted packet!";
+            char *error_message = "Error! Corrupted packet!";
             checksum = compute_checksum(error_message, strlen(error_message));
             char response[MAXLINE + sizeof(checksum)];
             memcpy(response, &checksum, sizeof(checksum));
@@ -72,12 +77,4 @@ int main() {
 
     close(sockfd);
     return 0;
-}
-
-uint32_t compute_checksum(const char *data, size_t length) {
-    uint32_t checksum = 0;
-    for (size_t i = 0; i < length; ++i) {
-        checksum += (uint8_t)data[i];
-    }
-    return checksum;
 }

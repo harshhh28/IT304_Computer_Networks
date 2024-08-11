@@ -1,4 +1,4 @@
-// Client side C program
+// Client side C program (UDP)
 
 #include <stdio.h>
 #include <stdlib.h>
@@ -10,7 +10,13 @@
 #define PORT 8080
 #define MAXLINE 1024
 
-uint32_t compute_checksum(const char *data, size_t length);
+uint32_t compute_checksum(const char *data, size_t length) {
+    uint32_t checksum = 0;
+    for (size_t i = 0; i < length; ++i) {
+        checksum += (uint8_t)data[i];
+    }
+    return checksum;
+}
 
 int main() {
 
@@ -65,12 +71,4 @@ int main() {
 
     close(sockfd);
     return 0;
-}
-
-uint32_t compute_checksum(const char *data, size_t length) {
-    uint32_t checksum = 0;
-    for (size_t i = 0; i < length; ++i) {
-        checksum += (uint8_t)data[i];
-    }
-    return checksum;
 }
