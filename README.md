@@ -21,3 +21,10 @@ This repository is dedicated to storing and managing files and labs for the IT30
 1. **Clone the Repository**
    ```bash
    git clone https://github.com/yourusername/IT304_Computer_Networks.git
+
+## 📫 How to Reach Me
+
+For any questions or if you need assistance, feel free to reach out to me:
+
+- **Email:** [harshgajjar2812@gmail.com](mailto:harshgajjar2812@gmail.com)
+- **LinkedIn:** [Harsh Gajjar](https://www.linkedin.com/in/harsh-gajjar-936536209)
