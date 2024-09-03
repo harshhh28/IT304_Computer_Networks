@@ -20,7 +20,7 @@ This repository is dedicated to storing and managing files and labs for the IT30
 
 1. **Clone the Repository**
    ```bash
-   git clone https://github.com/yourusername/IT304_Computer_Networks.git
+   git clone https://github.com/harshhh28/IT304_Computer_Networks.git
 
 ## 📫 How to Reach Me
 
