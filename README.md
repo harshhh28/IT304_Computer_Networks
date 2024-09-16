@@ -6,21 +6,16 @@ This repository is dedicated to storing and managing files and labs for the IT30
 
 ## 📁 Repository Structure
 
-- **Labs/**: Contains all lab exercises and their respective files.
-- **Assignments/**: Holds completed assignments and related documentation.
-- **Notes/**: A collection of notes and reference materials.
-
-## 📚 What You'll Find Here
-
-- **Lab Exercises**: Step-by-step guides and code examples for hands-on practice.
-- **Assignments**: Detailed reports and solutions for course assignments.
-- **Study Materials**: Notes, diagrams, and other resources to aid in understanding networking concepts.
+- **Labs/**: A collection of completed labs and related documentation.
+- **Notes/**: A collection of notes and lecture materials.
+- **References/**: A collection of reference materials.
 
 ## 🚀 Getting Started
 
 1. **Clone the Repository**
    ```bash
-   git clone https://github.com/harshhh28/IT304_Computer_Networks.git
+   git clone https://github.com/harshhh28/IE406_Machine_Learning.git
+   ```
 
 ## 📫 How to Reach Me
 
