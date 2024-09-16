@@ -9,6 +9,7 @@ This repository is dedicated to storing and managing files and labs for the IT30
 - **Labs/**: A collection of completed labs and related documentation.
 - **Notes/**: A collection of notes and lecture materials.
 - **References/**: A collection of reference materials.
+- **Course Handout/**: Course and curriculum related information.
 
 ## 🚀 Getting Started
 
