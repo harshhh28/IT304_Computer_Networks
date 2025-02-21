@@ -26,6 +26,4 @@ This repository is dedicated to storing and managing files and labs for the IT30
 
 For any questions or if you need assistance, feel free to reach out to me:
 
-- **Email:** [harshgajjar2812@gmail.com](mailto:harshgajjar2812@gmail.com)
-- **LinkedIn:** [Harsh Gajjar](https://www.linkedin.com/in/harsh-gajjar-936536209)
-- **X/Twitter:** [@harshgajjar_28](https://x.com/harshgajjar_28)
+- **Linktree:** [linktr.ee/harshgajjar](https://linktr.ee/harshgajjar)
